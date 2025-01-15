@@ -2,14 +2,15 @@
 import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
+const {id} = defineProps(['id']); // digunakan untuk mengambil route param karena pada pengaturan di main.js props nya true
 const loaded = ref(false);
 const error = ref(false);
 const product = ref(null);
-const route = useRoute();
+const route = useRoute(); // digunakan untuk mengambil parameter di URL Path, dengan cara: route.params.(nama param)
 
 watchEffect(() => {
-    if (route.params.id) {
-        fetch(`/api/products/${route.params.id}.json`)
+    if (id) { // bisa juga menggunakan route.params.id 
+        fetch(`/api/products/${id}.json`)
         .then(res => res.json())
         .then(data => {
             product.value = data;
@@ -24,7 +25,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <template v-if="route.params.id">
+    <template v-if="id">
         <h1>Product Detail</h1>
         <div v-if="loaded">
             <template v-if="product">
@@ -34,10 +35,10 @@ watchEffect(() => {
             </template>
         </div>
         <div v-else-if="error">
-            <h1>Error loading product: {{ $route.params.id }}</h1>
+            <h1>Error loading product: {{ id }}</h1>
         </div>
         <div v-else>
-            <h1>Loading product: {{ $route.params.id }}</h1>
+            <h1>Loading product: {{ id }}</h1>
         </div>
     </template>
     <template v-else>

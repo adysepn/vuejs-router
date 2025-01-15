@@ -1,9 +1,13 @@
 <script setup>
+const {requestId} = defineProps(['requestId']);
+console.log('requestId', requestId);
 
 </script>
 
 <template>
-    <h1>User Profile</h1>
+    <RouterView name="header" />
+    <h1>User Profile {{ requestId }}</h1>
+    <RouterView name="footer"/>
 </template>
 
 <style scoped>

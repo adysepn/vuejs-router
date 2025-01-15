@@ -3,8 +3,9 @@ import { watchEffect,ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const products = ref([]);
+const {product} = defineProps(['product']);
 const route = useRoute();
-const search = ref(route.query.product || '');
+const search = ref(product);
 const router = useRouter();
 
 watchEffect(() => {
